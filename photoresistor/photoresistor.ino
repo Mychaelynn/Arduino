@@ -2,15 +2,14 @@
 int lightPen = A0;
 int lightVal;
 
-int red = 2;
-int green = 3;
+int buzz = 2;
+
 
 
 void setup() {
   // put your setup code here, to run once:
   pinMode(lightPen,INPUT);
-  pinMode(red,OUTPUT);
-  pinMode(green,OUTPUT);
+  pinMode(buzz,OUTPUT);
   Serial.begin(9600);
 
   //as light gets darker --> resistence goes up --> current goes down --> voltage across 5k resistor will go down
@@ -24,14 +23,8 @@ void loop() {
   Serial.print("Light value is: ");
   Serial.println(lightVal);///
 
-  if (lightVal>600){//outside light is on
-    digitalWrite(red,HIGH);
-    digitalWrite(green,LOW);
-  } 
-  else{
-    digitalWrite(green,HIGH);
-    digitalWrite(red,LOW);
-  }
+  int buzzVal = map(lightVal,0,1023,1000,4500);
+  tone(buzz,buzzVal);
   delay(250);
 
 }
